@@ -1,0 +1,8 @@
+Package: emmies.package
+Title: emmies.package
+Version: 0.0.0.9000
+Author@R: Emmie Leijen (emmie.leijen@gmail.com)
+Description: This package contains two functions to help with with the coming exam. The first function helps with the aesthetics of scatterplots, and the second function filters through the notes made during the course.
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
