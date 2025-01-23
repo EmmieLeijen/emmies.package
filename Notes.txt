@@ -1,0 +1,167 @@
+﻿Week 1:  
+
+* Everything in R (like variables, vectors, lists, functions, etc.) is an object.
+* Three different types (modes) of objects: numeric, character, logical. #mode(x) is.mode(x)
+   * as.numeric()        as.character()        as.logical() #Forcing an object to belong to a class
+   * (mean(as.numeric(as.character(object)), na.rm = TRUE #as.character() converts factor into character, as.numeric() converts the character strings into numeric values
+* Vector: one-dimensional, all the same mode (numeric-/chategorical-/logical vector).
+   * c() #You can perform multiplication etc.: #a <- c(10, 20, 30)     #a*2     #You get: 20 40 60
+   * seq(start, end, step_size) #seq(from = 1, by = 2, length.out = 50)
+   * rep(object, number_of_repetitions) #rep(letters[1:4], each = 2) → no 'each' (only put 2) = abcdabcd
+   #rep(c("The Hobbit", "LOTR"), each = 3)
+   * sample(vector_to_sample_from, n) #sample(1:50, 1)        #sample(names(animals), 5)
+   * Indexing: #a[5] get the fifth element, a[-5] get all but the fifth element, a[c(1, 5)], a[a < 5]
+* Matrix: vectors ‘stacked’ on top of each other.
+   * matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL) 
+   * #byrow determines how the matrix is filled with data: FALSE is column-wise, TRUE is row-wise; 
+   * #dimnames assigns names to the rows or columns;
+   * #matrix(1:4, nrow = 2, dimnames = list(c("Row1", "Row2"), c("Col1", "Col2")))
+   * #matrix(c(1:3, letters[1:6]}, ncol = 3, nrow = 3)
+   * rbind(a, b) #Combining matrices
+* Array: are ‘stacked’ matrices:
+   * array(data = NA, dim = length(data), dimnames = NULL)
+   * #dim = c(rows, columns, matrices)
+   * #array(data = c("Lion", "Penguin", "Elephant", "Zebra", "Turtle", "Giraffe", "Butterfly", "Seal"),
+   *       dim = c(2,2,2), 
+   *       dimnames = list(cuteness_levels = c("Very cute", "Not cute"), 
+   *                       habitats = c("Inside", "Outside"), 
+   *                       diet_type = c("Meat", "Greens")))
+* Dataframes: data.frame()
+   * Indexing → #df$name        #df[[“name”]]
+                    #grades$student_ID[grades$passed] (ids of those who passed)
+                    #dataset$Exhausted[dataset$Mood.Swing == 'NO'] (Exh. values of ppl w no moodswings)
+   * Selecting columns → #df[ , c(“column1”, “column2”)]
+   * Subsetting → #subset(df, fun == TRUE)        #subset(df, imdb < 5)
+   * New column → #grades['passed'] <- grades$final_grade >= 5.5 & grades$exam >= 5.5
+* List: more useful than a vector, because a list can store multiple data types in one object.
+   * #my_cat <- list(name = "Tony", #Character
+   *                age = 12, #Numeric
+   *                cuddly = TRUE, #Logical
+   *                favourite_food = c("Whipped cream", "Ice cream") #Character vector
+* Simulating data:
+   * sort(runif(100, min = 1, max = 10)) #Generates 100 random numbers from a uniform distribution with a range between 1 and 10
+   * rnorm(50, mean = 100, sd = 10)
+* Filling in data / changing data:
+   * relationship_matrix[3,2] <- "L" #Position-based indexing
+   * relationship_matrix["Snape", "Harry"] <- "H" #Name-based indexing
+   * movie$cast[2] <- “Streep” #List indexing
+* Indexing:
+   * select_row <- trees[1,] #Selecting a row (all columns)
+   * select_variable <- trees['Girth']    trees[1]    trees$Girth    trees[['Girth']] #Selecting a variable
+   * select_cel <- trees[1,1] #Selecting a specific cel
+   * trees$Girth[c(10, 15, 17)] #Selecting 10th, 15th, and 17th cell from the ‘Girth’ column
+* Missing values:
+   * na.rm = TRUE #To exclude/handle NA values
+   * To check for missing values you use is.na(x), where you replace x with the dataset.
+   * Replacing NA values in the dataset: #mean_girth <- mean(trees$Girth, na.rm = TRUE) 
+      #trees$Girth[is.na(trees$Girth)] <- mean_girth
+* String manipulation:
+   * paste(stringvec1, stringvec2, separator) #Combine multiple string vectors
+      * #paste(“student”, 1:3, sep = “_”) →”student_1” “student_2"
+      * grep(pattern, mystring) #grep”(pattern = “hagrid”, c(chapter1, chapter206))
+      * gsub("\\.", "a", fruits) #gsub(pattern, replacement, x)
+      * strsplit(x = somestring, split = regexp)
+* Factors: encode categorical variables, have predetermined levels, levels correspond to numbers
+   * Look up more!
+* Files:
+   * getwd(), setwd()
+   * write.csv() #saves dataframe, read.csv() #loads dataframe
+* list.files() #Lists the files in a folder or directory
+* rm(list = ls()) #rm() removes something in a list; ls() lists all objects in the environment of R
+* When a boolean is ‘FALSE’, it gets the value 0
+* rowSums(X) #Sum of each row/participant
+* result <- t.test(x, y) #result$statistic or result[[“statistic”]]
+* Assignment 8, advanced R:
+   * #give the columns of the dataset good names
+   * colnames(data_url) <- c("Sepal Length", "Sepal Width", "Petal Length", "Petal Width", "Species")
+   * #Create a scatterplot,'Sepal Length' on x-axis, 'Petal Length' on y-axis, color based on 'Species'
+   * plot_url <- ggplot(data = data_url, aes(x = `Sepal Length`, y = `Petal Length`, color = Species)) + geom_point() #Adds the points to the scatter plot 
+* Look up: NaN        Inf
+
+
+Week 2:
+* Functions to plot: hist(h), boxplot(h), barplot(h), pie(h), stem(h), dotchart(h), mosaicplot(h), plot(h)
+   * #plot(height, col = "blue", pch=9, main= "my first plot", xlab = "row in dataset")
+   * #title(), grid(), lines(), abline(), par()
+      * #par(mfrow = c(1,2))
+* Saving plots: png(), jpeg(), pdf(), svg(), bmp(), x11() #don’t forget to dev.off()
+* How to, ggplot:
+   * ggplot(x, mapping = aes(x = column1, y = column2)) + geom_point(color = “blue”) + labs(title = “title”, x = “x”, y = “y”)
+      * #ggplot(titanic_train, aes(x=Sex, fill = factor(Survived, labels = c("dead", "alive"))))+   geom_bar() +  labs(fill = "How did it go?")
+      * #scale_fill_discrete(labels = c("dead", "alive")) → can use this instead of in aes
+   * geom_smooth() #With this you add the CI
+   * ggbetweenstats(data = dataset, x = supp, y = len)
+* Functions:
+   * function(argument1 = default, argument2 = default) {}
+* df = read.csv(url)
+* abline(lm(dataset$x ~ dataset$y) #Adding a regression line OR lm(x ~ y, data = dataset)
+* plot_ly(human_body, x = ~TotalHeight, y = ~HeadCircumference, z = ~ShoulderToWaist, opacity = 0.5, type="scatter3d", mode = "markers")
+* data_cran <- cran_downloads(packages = c("package1", "package2"), from = "date", to = "date")
+   * #ggplot(data_cran, mapping = aes(x = date, y = count, color = package)) + geom_line
+* Assignment 6:
+   * # data.frame(ChickWeight) %>% 
+   *   group_by(Chick) %>%
+   *   filter(Chick %in% c('1', '20', '5', '40', '19')) %>%
+   *   summarise(max_weight = max(weight)) %>%
+   *   mutate(chick = factor(Chick, levels=c('1', '20', '5', '40', '19'))) %>%
+   *   ggplot() +   geom_bar(aes(chick, max_weight), stat = "identity")
+* Assignments 12 and 13 (stock):
+   * #stockdata <- getSymbols("AAPL", from = 'date', to = "date", warnings = FALSE, auto.assign = TRUE)
+   * #chartSeries(stockdata, name = "2024 Google Stock Price")
+   * #plotstock <- function(stock_symbol = "GOOGL", year = 2024, new_file_name = "stockplot.png") {
+      * #stockdata <- getSymbols(stock_symbol, from = paste0(year,'-01-01'), to = paste0(year,'-12-31'), warnings = FALSE, auto.assign = FALSE)
+      * #png(new_file_name) → #Don’t forget dev.off()
+      * #chartSeries(stock_data, name = paste(year, stock_symbol, "Stock Price")) }
+* Assignment 16: #matrix(1:9, 3, byrow = TRUE) * 1:3
+
+
+Week 3:
+* if, ifelse, else loops:
+   * if (condition1) {} else if (condition2) {} else {} #Think about the ordering of the else ifs!!!
+      * #if (x < 5) { print("x is less than 5") } 
+else if (x == 10) { print("x is equal to 10") } 
+else { print("x is greater than 5 but not 10") }
+   * ifelse(test_expression_booleans, value_if_TRUE, value_if_FALSE) #ifelse(x > 4, "Large", "Small")
+   * #ifelse(content == “dogs”, “show”, “skip”)
+   * #ifelse(id %% 2 == 0, “show”, “skip”) → checks whether each number in the vector id is even.
+   * Logical and &&, or ||, logical negation !
+   * #if (content == “dogs” && battery > 15) {}
+   * (vec > 0) #Error the condition has length > 1 (foo) #Argument is not interpretable as logical
+   * While, if, else loops: repeats something() until condition FALSE
+   * while(condition1) {} if (condition2) {} else {}
+   * For loops: run for a fixed number of iterations.
+   * for (element in sequence) {} #sequence is the collection of values
+   * #for (i in 1:5) { print(i) } → printing the numbers 1:5
+   * #for (i in 1:length(numbers)) {print(paste("Index:", i, "Value:", numbers[i]))}
+   * #for (column in colnames(sequence))
+   * Through dimensions of a matrix (1:4, 2, 2) or array (data = NA, dim = c(4, 50, 3)):
+   * for(i in 1:2){print(sum(m[i,]))}
+   * for (middle_dim in 1:50){}
+   * format(Sys.time(), "%a %b %d %X %Y") #%a day, %b month, %d date, %X time, %Y year
+   * A game of dice: 
+   * counter <- 0
+   * while(counter <= 10){
+   *    counter <- counter + 1
+   *    dice <- sample(1:6, 3, replace=T)
+   *    if(length(unique(dice)) == 3){
+   *       wallet <- wallet + 1
+   *    } else { wallet <- wallet - 3  }}
+   * Changing all even numbers in a vector to zero:
+   * vec[vec %% 2 == 0] <- 0
+   * ifelse(x %% 2 == 0, 0, x) 
+   * for(i in 1:length(x)){
+         if(x[i] %% 2 == 0){  
+            x[i] <- 0  }}
+      * Implicit loops:
+      * apply(x, margin, function, my_arguments) 
+      * #apply(array_numbers, 1, min): 1 is the first dimension, min gets the minimum values
+      * #apply(my_matrix, 2, sum, na.rm = T): 2 is the rows 
+      * sapply()
+      * Switch: switch(caught_fish, large_trout = "eat", small_trout = "return")
+      * {next} skips to the next iteration, break completely stops the loop.
+      * Local vs global environment:
+      * Everything inside a function happens in another world ("local environment")
+      * The outside world ("global environment") only gets stuff that the function returns
+      * Code inside functions can (but shouldn’t) use stuff from the global environment
+      * Bring stuff to global environment via return()
+
